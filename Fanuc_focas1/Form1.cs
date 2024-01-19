@@ -17,10 +17,22 @@ namespace Fanuc_focas1
       #region event
       private void Form1_Load(object sender, EventArgs e)
       {
+         Init();
+         
+      }
+
+
+      #endregion
+
+      #region method
+      private void Init()
+      {
          try
          {
-            String hi = "hi";
-            LogController.Write(hi);
+            this.TabMain.TabPages.RemoveAt(1);
+            this.tabPage1.Text = "Main";
+
+            
          }
          catch (ThreadAbortException) { }
          catch (Exception ex)
