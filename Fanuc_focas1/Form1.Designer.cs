@@ -31,10 +31,12 @@
          TplMain = new TableLayoutPanel();
          TplHeader = new TableLayoutPanel();
          TplFooter = new TableLayoutPanel();
+         LblTime = new Label();
          TabMain = new TabControl();
          tabPage1 = new TabPage();
          tabPage2 = new TabPage();
          TplMain.SuspendLayout();
+         TplFooter.SuspendLayout();
          TabMain.SuspendLayout();
          SuspendLayout();
          // 
@@ -76,6 +78,7 @@
          TplFooter.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
          TplFooter.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
          TplFooter.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+         TplFooter.Controls.Add(LblTime, 0, 0);
          TplFooter.Dock = DockStyle.Fill;
          TplFooter.Location = new Point(3, 745);
          TplFooter.Name = "TplFooter";
@@ -83,6 +86,18 @@
          TplFooter.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
          TplFooter.Size = new Size(1432, 78);
          TplFooter.TabIndex = 1;
+         // 
+         // LblTime
+         // 
+         LblTime.AutoSize = true;
+         LblTime.Dock = DockStyle.Fill;
+         LblTime.Font = new Font("맑은 고딕", 20F, FontStyle.Regular, GraphicsUnit.Point);
+         LblTime.Location = new Point(3, 0);
+         LblTime.Name = "LblTime";
+         LblTime.Size = new Size(280, 78);
+         LblTime.TabIndex = 0;
+         LblTime.Text = "TIME";
+         LblTime.TextAlign = ContentAlignment.MiddleCenter;
          // 
          // TabMain
          // 
@@ -123,8 +138,11 @@
          Controls.Add(TplMain);
          Name = "Form1";
          Text = "Form1";
+         FormClosing += EndProcess;
          Load += Form1_Load;
          TplMain.ResumeLayout(false);
+         TplFooter.ResumeLayout(false);
+         TplFooter.PerformLayout();
          TabMain.ResumeLayout(false);
          ResumeLayout(false);
       }
@@ -137,5 +155,6 @@
       private TabControl TabMain;
       private TabPage tabPage1;
       private TabPage tabPage2;
+      private Label LblTime;
    }
 }

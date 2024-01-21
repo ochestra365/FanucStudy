@@ -8,6 +8,11 @@ namespace Fanuc_focas1
 {
    public partial class Form1 : Form
    {
+      #region Field
+      private Thread Threadtimer = null;
+      private bool IsTimeRun = false;
+      #endregion
+
       #region Constructor
       public Form1()
       {
@@ -18,7 +23,7 @@ namespace Fanuc_focas1
       private void Form1_Load(object sender, EventArgs e)
       {
          Init();
-         
+
       }
 
 
@@ -32,7 +37,41 @@ namespace Fanuc_focas1
             this.TabMain.TabPages.RemoveAt(1);
             this.tabPage1.Text = "Main";
 
-            
+            this.Text = "Fanuc_Practice";
+            this.IsTimeRun = true;
+            this.Threadtimer = new Thread(TimeCheck);
+            this.Threadtimer.IsBackground = true;
+            this.Threadtimer.Start();
+            this.Threadtimer.Name = "ThreadTime";
+         }
+         catch (ThreadAbortException) { }
+         catch (Exception ex)
+         {
+            LogController.Write(ex.ToString());
+         }
+      }
+
+      private void TimeCheck()
+      {
+         while (this.IsTimeRun)
+         {
+            if (this.InvokeRequired)
+            {
+               this.BeginInvoke(new Action(() => LblTime.Text = $"{DateTime.Now}"));
+            }
+            else
+            {
+               this.LblTime.Text = $"{DateTime.Now}";
+            }
+            Thread.Sleep(1000);
+         }
+      }
+      private void EndProcess(object sender, FormClosingEventArgs e)
+      {
+         try
+         {
+            this.IsTimeRun = false;
+            if (this.Threadtimer.IsAlive) {  this.Threadtimer = null; }
          }
          catch (ThreadAbortException) { }
          catch (Exception ex)
@@ -41,5 +80,6 @@ namespace Fanuc_focas1
          }
       }
       #endregion
+
    }
 }
